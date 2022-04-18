@@ -20,16 +20,16 @@ void setup() {
     int note = NOTE_START + 1;
 
     // I don't know which one is 'C1' key so I will just fill all column with default note :)
-    for (int row = 0;row < NUM_ROWS;++row) {
+    for (int row = 0; row < NUM_ROWS; ++row) {
         keyPressed[0] = 0;
         keyToMidiMap[0][row] = NOTE_START;
     }
 
     // Fill arrays with default values
-    for (int col = 1;col < NUM_COLS;++col) {
+    for (int col = 1; col < NUM_COLS; ++col) {
         keyPressed[col] = 0;
         
-        for (int row = 0;row < NUM_ROWS;++row) {
+        for (int row = 0; row < NUM_ROWS; ++row) {
             keyToMidiMap[col][row] = note;
             note++;
         }
@@ -72,7 +72,7 @@ void loop() {
         byte rowValues = PINC;
 
         // Process key press
-        for (int row = 0;row < NUM_ROWS;++row) {
+        for (int row = 0; row < NUM_ROWS; ++row) {
             if(rowValues & (1 << row) == 0 && !keyPressed[col] & (1 << row)) {
                 keyPressed[col] |= (1 << row);
                 MIDI.sendNoteOn(keyToMidiMap[col][row], NOTE_VELOCITY, 1);
@@ -80,7 +80,7 @@ void loop() {
         }
 
         // Process key release
-        for (int row = 0;row < NUM_ROWS;++row) {
+        for (int row = 0; row < NUM_ROWS; ++row) {
             if(rowValues & (1 << row) != 0 && keyPressed[col] & (1 << row)) {
                 keyPressed[col] &= -(1 << row);
                 MIDI.sendNoteOff(keyToMidiMap[col][row], 0, 1);
