@@ -27,7 +27,8 @@ void setup() {
 
     // Fill arrays with default values
     for (int col = 1;col < NUM_COLS;++col) {
-    keyPressed[col] = 0;
+        keyPressed[col] = 0;
+        
         for (int row = 0;row < NUM_ROWS;++row) {
             keyToMidiMap[col][row] = note;
             note++;
